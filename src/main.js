@@ -7,11 +7,10 @@ let logoCard = document.querySelector(".cc-logo .logocard")
 
 function setTypeCard(type){
     const colors = {
-        visa: ["#2D57F2", "#436D99", "#FFFFFF"],
+        visa: ["#2D57F2", "#436D99"],
         mastercard:["#C69347", "#DF6F29"],
         default:["black", "gray"],
     }
-    console.log(type)
     ccBgColor1.setAttribute("fill", colors[type][0])
     ccBgColor2.setAttribute("fill", colors[type][1])
     logoCard.setAttribute("src", `cc-${type}.svg`)
