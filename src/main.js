@@ -7,11 +7,12 @@ let logoCard = document.querySelector(".cc-logo .logocard")
 
 function setTypeCard(type){
     const colors = {
-        visa: ["#2D57F2", "#436D99"],
+        visa: ["#2D57F2", "#436D99", "#FFFFFF"],
         mastercard:["#C69347", "#DF6F29"],
-        def:["black", "gray"]
+        default:["black", "gray"],
     }
-    ccBgColor1.setAttribute('fill', colors[type][0])
+    console.log(type)
+    ccBgColor1.setAttribute("fill", colors[type][0])
     ccBgColor2.setAttribute("fill", colors[type][1])
     logoCard.setAttribute("src", `cc-${type}.svg`)
 }
@@ -69,10 +70,9 @@ const cardNumberPattern = {
     ],
     dispatch: function (appended, dynamicMasked) {
         const number = (dynamicMasked.value + appended).replace(/\D/g, "")
-        const foundMask = dynamicMasked.compiledMasks.find(function(item){
+        const foundMask = dynamicMasked.compiledMasks.find(function (item) {
             return number.match(item.regex)
         })
-        console.log(foundMask)
         return foundMask
     },
 }
@@ -95,7 +95,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
 const cardHolder = document.querySelector("#card-holder")
 cardHolder.addEventListener("input", () => {
     const ccHolder = document.querySelector(".cc-holder .value")
-    ccHolder.innerHTML = cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
+    ccHolder.innerText = cardHolder.value.length === 0 ? "FULANO DA SILVA" : cardHolder.value
 })
 
 // pegando o código CVC do cartão
@@ -106,20 +106,21 @@ cvcCodeMasked.on("accept", () => {
 
 function updateCvcCode(code){
     const ccSecurity = document.querySelector(".cc-security .value")
-    ccSecurity.innerHTML = code.length === 0 ? "1234" : code
+    ccSecurity.innerText = code.length === 0 ? "1234" : code
 }
 
-// pegando o nome do titular
+// pegando o numero
 
 cardNumberMasked.on('accept', () => {
-    const cardtype = cardNumberMasked.masked.currentMask.cardtype
-    setTypeCard(cardtype)
+    const cardType = cardNumberMasked.masked.currentMask.cardtype
+    setTypeCard(cardType)
     updateCardNumber(cardNumberMasked.value)
 })
 
 function updateCardNumber (number){
-    const ccNumber = document.querySelector(".cc-number .value")
-    ccNumber.innerHTML = number.length === 0 ? "1234 5678 9012 3456" : number
+    const ccNumber = document.querySelector(".cc-number")
+    ccNumber.innerText = number.length === 0 ? "1234 5678 9871 5236" : number
+    
 }
 
 // pegando expiração do cartão
@@ -130,8 +131,8 @@ expDateMasked.on("accept", () => {
 })
 
 function updateExpirationDate (date){
-    const expirationDate = document.querySelector(".cc-expiration .value")
-    expirationDate.innerHTML = date.length === 0 ? "02/32" : date
+    const expirationDate = document.querySelector(".cc-extra .value")
+    expirationDate.innerText = date.length === 0 ? "02/32" : date
 }
 
 
